@@ -18,7 +18,7 @@
     'use strict';
     
     function contentView(content) {
-    	alert('c : ' + content);
+    	alert('content');
     	$("#myModal #modalContent").text(content);
     }
   </script>

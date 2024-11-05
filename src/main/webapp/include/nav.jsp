@@ -9,7 +9,7 @@
 </script>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <%-- <a class="navbar-brand" href="${ctp}/">Home</a> --%>
-  <a class="navbar-brand" href="http://192.168.50.20:9090/javaGroup">Home</a>
+  <a class="navbar-brand" href="http://192.168.50.65:9090/javaGroup">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -20,7 +20,7 @@
       </li>
       <c:if test="${!empty sNickName}">
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Board</a>
+	        <a class="nav-link" href="BoardList.bo">Board</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">Pds</a>
