@@ -15,7 +15,7 @@
     // 사용자 페이지 설정
     function pageSizeChange() {
     	let pageSize = document.getElementById("pageSize").value;
-    	location.href = "BoardList.bo?pageSize="+pageSize+"&pag=1";
+    	location.href = "BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize="+pageSize+"&pag=1";
     }
     
     function contentView(content) {
@@ -70,12 +70,14 @@
 		    <tr>
 		      <td>${curScrStartNo}</td>
 		      <td class="text-left">
-		        <c:if test="${vo.claim == 'NO' || sMid == vo.mid || sLevel == 0}"><a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a></c:if> 
+		        <c:if test="${vo.claim == 'NO' || sMid == vo.mid || sLevel == 0}"><a href="BoardContent.bo?search=${search}&searchString=${searchString}&idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a></c:if> 
 		        <c:if test="${vo.claim != 'NO' && sMid != vo.mid && sLevel != 0}"><a href="javascript:alert('현재글은 신고된 글입니다.')">${vo.title}</a></c:if> 
+		        <c:if test="${vo.time_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
 		      </td>
-		      <%-- <td><a href="#" onclick="contentView('${content}')" data-toggle="modal" data-target="#myModal">${vo.nickName}</a></td> --%>
-		      <td><a href="javascript:contentView('${fn:replace(vo.content, newLine, '<br/>')}')">${vo.nickName}</a></td>
-		      <td>${vo.wDate}</td>
+		      <td><a href="#" onclick='contentView("${vo.content}")' data-toggle="modal" data-target="#myModal">${vo.nickName}</a></td>
+		      <td>
+		        ${vo.time_diff > 24 ? fn:substring(vo.wDate,0,10) : vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,19)}
+		      </td>
 		      <td>${vo.readNum}</td>
 		    </tr>
 	    </c:if>
@@ -88,14 +90,14 @@
 <!-- 블록페이지 시작 -->
 <div class="text-center">
   <ul class="pagination justify-content-center">
-	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?level=${level}&pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
-	  <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?level=${level}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li></c:if>
+	  <c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize=${pageSize}&pag=1">첫페이지</a></li></c:if>
+	  <c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></li></c:if>
 	  <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize) + blockSize}" varStatus="st">
-	    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="BoardList.bo?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
-	    <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
+	    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
+	    <c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
 	  </c:forEach>
-	  <c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?level=${level}&pageSize=${pageSize}&pag=${(curBlock+1)*blockSize+1}">다음블록</a></li></c:if>
-	  <c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?level=${level}&pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
+	  <c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize=${pageSize}&pag=${(curBlock+1)*blockSize+1}">다음블록</a></li></c:if>
+	  <c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="BoardSearchList.bo?search=${search}&searchString=${searchString}&pageSize=${pageSize}&pag=${totPage}">마지막페이지</a></li></c:if>
   </ul>
 </div>
 <!-- 블록페이지 끝 -->

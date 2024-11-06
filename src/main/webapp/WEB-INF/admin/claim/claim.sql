@@ -8,14 +8,20 @@ create table claim(
   claimMid varchar(30) not null,		/* 신고자 아이디 */
   claimContent text not null,				/* 신고 사유 */
   claimDate datetime default now(),	/* 신고한 날짜 */
-  primary key(idx)
+  primary key(idx),
+  foreign key(partIdx) references board(idx) on update cascade on delete cascade
 );
 desc claim;
 
-insert into claim values (default, 'board', 11, 'kms1234', '광고,홍보,영리목적', default);
+-- 외래키 추가하기
+alter table claim add constraint foreign key(partIdx) references board(idx) on update cascade on delete cascade
+
+insert into claim values (default, 'board', 15, 'hkd1234', '광고,홍보,영리목적', default);
 
 select * from claim;
 
-select c.*,b.title, b.nickName, b.mid from claim c, board b where c.partIdx = b.idx;
+select c.*, b.title, b.nickName, b.mid from claim c, board b where c.partIdx = b.idx;
 
-select c.*,b.title as title, b.nickName as ntckName, b.mid as mid from claim c, board b where c.partIdx = b.idx;
+select c.*, b.title as title, b.nickName as nickName, b.mid as mid from claim c, board b where c.partIdx = b.idx;
+
+delete from claim where idx = 10;

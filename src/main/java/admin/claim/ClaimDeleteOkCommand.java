@@ -18,10 +18,9 @@ public class ClaimDeleteOkCommand implements AdminInterface {
 		
 		AdminDAO dao = new AdminDAO();
 		
-		int res = dao.setClaimDeleteOk(part ,idx);
+		int res = dao.setClaimDeleteOk(part, idx);
 		
 		response.getWriter().write(res + "");
-
 	}
 
 }

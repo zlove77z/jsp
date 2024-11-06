@@ -52,7 +52,7 @@
     <table class="table table-borderless">
       <tr>
 			  <td class="text-left">
-		    	<button type="button" onclick="location.href='BoardContent.bo?idx=${vo.idx}&pag=${pag}'" class="btn btn-info mb-2">돌아가기</button>
+		    	<button type="button" onclick="location.href='BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}'" class="btn btn-info mb-2">돌아가기</button>
 			    <button type="reset" class="btn btn-warning mb-2">다시입력</button>
         </td>
         <td class="text-right">
@@ -64,6 +64,7 @@
     <input type="hidden" name="idx" value="${vo.idx}" />
     <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" />
     <input type="hidden" name="pag" value="${pag}" />
+    <input type="hidden" name="pageSize" value="${pageSize}" />
   </form>
 </div>
 <p><br/></p>

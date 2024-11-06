@@ -11,6 +11,7 @@ public class BoardUpdateOkCommand implements BoardInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int pag = (request.getParameter("pag")==null || request.getParameter("pag").equals("")) ? 0 : Integer.parseInt(request.getParameter("pag"));
+		int pageSize = (request.getParameter("pageSize")==null || request.getParameter("pageSize").equals("")) ? 0 : Integer.parseInt(request.getParameter("pageSize"));
 		int idx = (request.getParameter("idx")==null || request.getParameter("idx").equals("")) ? 0 : Integer.parseInt(request.getParameter("idx"));
 		String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
 		String title = request.getParameter("title")==null ? "" : request.getParameter("title");
@@ -35,14 +36,13 @@ public class BoardUpdateOkCommand implements BoardInterface {
 		
 		if(res != 0) {
 			request.setAttribute("message", "게시판에 글이 수정되었습니다.");
-			//request.setAttribute("url", "/BoardContent.bo?idx="+idx+"&pag="+pag);
-			request.setAttribute("url", "/BoardList.bo?pag="+pag);
+			request.setAttribute("url", "/BoardContent.bo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);
+			//request.setAttribute("url", "/BoardList.bo?pag="+pag+"&pageSize="+pageSize);
 		}
 		else {
-			request.setAttribute("message", "게시판에 글수정 실패~~");
-			request.setAttribute("url", "/BoardUpdate.bo?idx="+idx+"&pag="+pag);
+			request.setAttribute("message", "게판에 글수정 실패~~");
+			request.setAttribute("url", "/BoardUpdate.bo?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);
 		}
 	}
 
 }
-

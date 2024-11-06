@@ -29,6 +29,8 @@ public class BoardClaimInputCommand implements AdminInterface {
 		
 		int res = dao.setBoardClaimInput(vo);
 		
+		
+		
 		response.getWriter().write(res + "");
 	}
 
