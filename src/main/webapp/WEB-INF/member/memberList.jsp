@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<% pageContext.setAttribute("newLine", "\n"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -18,8 +17,7 @@
     'use strict';
     
     function contentView(content) {
-    	alert('content');
-    	$("#myModal #modalContent").text(content);
+    	$("#myModal #modalContent").html(content);
     }
   </script>
 </head>
@@ -45,8 +43,10 @@
 	      <td>${st.count}</td>
 	      <td>${vo.nickName}</td>
 	      <c:if test="${vo.userInfor == '공개'}">
-		      <td><a href="#" onclick="contentView('${fn:replace(vo.content,newLine,'<br>')}')" data-toggle="modal" data-target="#myModal">${vo.mid}</a></td>
-		      <td>${vo.name}/${vo.content}</td>
+		      <c:if test="${empty vo.content}"><c:set var="content" value="내용없음" /></c:if>
+		      <c:if test="${!empty vo.content}"><c:set var="content" value="${vo.content}" /></c:if>
+		      <td><a href="#" onclick='contentView("${content}")' data-toggle="modal" data-target="#myModal">${vo.mid}</a></td>
+		      <td>${vo.name}</td>
 		      <td>${vo.gender}</td>
 		      <td>${fn:substring(vo.birthday,0,10)}</td>
 		      <td>${vo.email}</td>

@@ -219,7 +219,14 @@ public class MemberDAO {
 				vo.setTel(rs.getString("tel"));
 				vo.setAddress(rs.getString("address"));
 				vo.setEmail(rs.getString("email"));
-				vo.setContent(rs.getString("content"));
+				
+				String content = rs.getString("content").replaceAll("\\r?\\n", "<br/>");	// 엔터키 제어코드에 따른 오류방지..
+				//content = content.replace("'", "&#39;");	// content안에 따옴표(') 또는 (")가 있을때 error발생
+				//content = content.replace("\"", "&quot;");// 큰따옴표로 변환해도 error발생
+				//content = content.replace("\"", "&#39;"); // 따라서 큰따옴표는 작은따옴표로 변경처리한다.
+				content = content.replace("'", "&#39;").replace("\"", "&#39;");	// content안에 따옴표(') 또는 (")가 있을때 error발생
+				vo.setContent(content);
+				
 				vo.setPhoto(rs.getString("photo"));
 				vo.setLevel(rs.getInt("level"));
 				vo.setUserInfor(rs.getString("userInfor"));
